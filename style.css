@@ -1,0 +1,376 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #080d18;
+    color: #e8f1ff;
+    min-height: 100vh;
+}
+
+header {
+    text-align: center;
+    padding: 35px 15px;
+    background: linear-gradient(135deg, #101e39, #102b45);
+    border-bottom: 1px solid #00d9ff;
+}
+
+header h1 {
+    font-size: 38px;
+    color: #00e5ff;
+    letter-spacing: 2px;
+}
+
+header p {
+    margin-top: 10px;
+    color: #a8bfd8;
+}
+
+main {
+    width: 90%;
+    max-width: 1100px;
+    margin: 30px auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+}
+
+.panel {
+    background: #111b2c;
+    border: 1px solid #263d59;
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: 0 0 20px #001b35;
+}
+
+.panel h2 {
+    color: #00e5ff;
+    margin-bottom: 18px;
+}
+
+textarea {
+    width: 100%;
+    height: 160px;
+    padding: 15px;
+    background: #060b14;
+    color: #7cffb2;
+    border: 1px solid #28516b;
+    border-radius: 8px;
+    resize: vertical;
+    font-family: monospace;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+button {
+    padding: 11px 20px;
+    border: none;
+    border-radius: 7px;
+    background: #00bcd4;
+    color: #06111b;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #70f0ff;
+    transform: translateY(-2px);
+}
+
+.pipeline {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin: 25px 0;
+}
+
+.stage {
+    text-align: center;
+    padding: 18px 5px;
+    background: #1b2b42;
+    border: 1px solid #42617e;
+    border-radius: 8px;
+    font-weight: bold;
+    color: #a8bfd8;
+}
+
+.stage.active {
+    background: #00bcd4;
+    color: #06111b;
+    border-color: #7affff;
+    box-shadow: 0 0 18px #00bcd4;
+}
+
+#cycle, #status {
+    margin-top: 12px;
+    color: #9ec7e8;
+}
+
+.registers {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.register {
+    background: #081321;
+    padding: 10px;
+    border: 1px solid #28465f;
+    border-radius: 6px;
+    text-align: center;
+    font-family: monospace;
+}
+
+.register span {
+    display: block;
+    color: #00e5ff;
+    margin-bottom: 5px;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #718ba5;
+}
+
+@media (max-width: 700px) {
+    main {
+        grid-template-columns: 1fr;
+    }
+
+    .pipeline {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 4px;
+    }
+
+    .stage {
+        padding: 14px 2px;
+        font-size: 12px;
+    }
+}
+
+.monitor {
+    margin-top: 22px;
+    padding: 18px;
+    background: #071321;
+    border: 1px solid #00bcd4;
+    border-radius: 10px;
+}
+
+.monitor h3 {
+    color: #00e5ff;
+    margin-bottom: 15px;
+}
+
+.monitor p {
+    margin: 10px 0;
+    padding: 10px;
+    background: #102238;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+#hazardStatus {
+    border-left: 4px solid #ffb74d;
+}
+
+#forwardStatus {
+    border-left: 4px solid #00e5a8;
+}
+
+#eventLog {
+    margin-top: 12px;
+    max-height: 150px;
+    overflow-y: auto;
+    font-family: monospace;
+    font-size: 12px;
+    color: #9ec7e8;
+}
+
+.log-entry {
+    padding: 7px;
+    border-bottom: 1px solid #263d59;
+}
+
+#memory {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.memory-cell {
+    background: #081321;
+    padding: 12px 6px;
+    border: 1px solid #28516b;
+    border-radius: 6px;
+    text-align: center;
+    font-family: monospace;
+}
+
+.memory-cell span {
+    display: block;
+    color: #00e5ff;
+    margin-bottom: 6px;
+}
+
+.memory-cell strong {
+    color: #7cffb2;
+}
+
+/* Animated pipeline visualization */
+
+.stage {
+    white-space: pre-line;
+    min-height: 85px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+.stage.active {
+    animation: stageGlow 0.7s ease-in-out;
+}
+
+@keyframes stageGlow {
+    0% {
+        box-shadow: 0 0 0 transparent;
+        transform: scale(1);
+    }
+
+    50% {
+        box-shadow: 0 0 22px #00e5ff;
+        transform: scale(1.04);
+    }
+
+    100% {
+        box-shadow: 0 0 10px #00bcd4;
+        transform: scale(1);
+    }
+}
+
+/* Highlight memory cells */
+
+.memory-cell {
+    transition: 0.3s;
+}
+
+.memory-cell:hover {
+    border-color: #00e5ff;
+    box-shadow: 0 0 12px #00bcd4;
+    transform: translateY(-3px);
+}
+
+/* Load-use hazard visual indicator */
+
+#hazardStatus {
+    transition: 0.3s;
+}
+
+#hazardStatus.hazard-active {
+    color: #ff7070;
+    background: #35151c;
+    border-left: 4px solid #ff3b5c;
+    box-shadow: 0 0 12px #ff3b5c55;
+    animation: hazardPulse 0.8s infinite alternate;
+}
+
+@keyframes hazardPulse {
+    from {
+        box-shadow: 0 0 4px #ff3b5c33;
+    }
+
+    to {
+        box-shadow: 0 0 18px #ff3b5c99;
+    }
+}
+
+/* CPU Performance Dashboard */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.stat-card {
+    padding: 16px;
+    text-align: center;
+    background: linear-gradient(135deg, #102238, #0a1728);
+    border: 1px solid #28516b;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.stat-card:hover {
+    border-color: #00e5ff;
+    box-shadow: 0 0 15px #00bcd455;
+    transform: translateY(-3px);
+}
+
+.stat-card span {
+    display: block;
+    color: #9ec7e8;
+    font-size: 12px;
+    margin-bottom: 9px;
+}
+
+.stat-card strong {
+    color: #00e5ff;
+    font-size: 25px;
+    font-family: monospace;
+}
+
+@media (max-width: 400px) {
+    .stats {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Professional CPU pipeline stage labels */
+
+.stage {
+    position: relative;
+    gap: 5px;
+    padding: 15px 5px;
+}
+
+.stage::before {
+    display: block;
+    font-size: 10px;
+    color: #00e5ff;
+    letter-spacing: 1px;
+}
+
+.stage::after {
+    display: block;
+    font-size: 10px;
+    color: #9ec7e8;
+}
+
+#IF::before { content: "STAGE 01"; }
+#ID::before { content: "STAGE 02"; }
+#EX::before { content: "STAGE 03"; }
+#MEM::before { content: "STAGE 04"; }
+#WB::before { content: "STAGE 05"; }
+
+#IF::after { content: "Instruction Fetch"; }
+#ID::after { content: "Instruction Decode"; }
+#EX::after { content: "Execute"; }
+#MEM::after { content: "Memory Access"; }
+#WB::after { content: "Write Back"; }

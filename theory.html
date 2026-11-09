@@ -1,0 +1,891 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
+    <title>RISC-Vision | Theory & Learning</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .theory-diagram {
+            width: 100%;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        .theory-diagram svg {
+            display: block;
+            min-width: 500px;
+            max-width: 100%;
+            height: auto;
+            margin: auto;
+        }
+
+        .theory-table {
+            width: 100%;
+            min-width: 550px;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        .theory-table th,
+        .theory-table td {
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+        }
+
+        .stage-if { background: #2563eb; color: white; }
+        .stage-id { background: #7c3aed; color: white; }
+        .stage-ex { background: #0891b2; color: white; }
+        .stage-mem { background: #d97706; color: white; }
+        .stage-wb { background: #16a34a; color: white; }
+
+        .example-box {
+            padding: 15px;
+            border-radius: 12px;
+            margin: 12px 0;
+        }
+
+        .example-red {
+            background: #fee2e2;
+            color: #7f1d1d;
+        }
+
+        .example-yellow {
+            background: #fef3c7;
+            color: #78350f;
+        }
+
+        .example-blue {
+            background: #dbeafe;
+            color: #1e3a8a;
+        }
+
+        .example-green {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .cpi-calculator {
+            background: #eff6ff;
+            color: #1e3a8a;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .cpi-calculator input {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0 18px;
+            box-sizing: border-box;
+        }
+
+        .cpi-result {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 18px;
+        }
+
+        #learningController {
+            border: 2px solid #2563eb;
+        }
+
+        #learningController select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0 15px;
+            border-radius: 8px;
+        }
+
+        .learning-progress {
+            width: 100%;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        #progressBar {
+            width: 0%;
+            height: 100%;
+            background: #16a34a;
+            transition: width 0.3s ease;
+        }
+
+        .learning-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .learning-buttons button:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        .theory-navigation {
+            display: inline-block;
+            margin: 10px 0;
+        }
+
+        .step-note {
+            font-size: 0.95em;
+            opacity: 0.85;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>📘 Theory & Learning</h1>
+    <p>Understand the concepts behind the RISC-Vision CPU Simulator</p>
+</header>
+
+<main>
+
+    <!-- NAVIGATION PANEL: NOT A LEARNING STEP -->
+    <section class="panel">
+        <h2>Explore RISC-Vision</h2>
+        <p>
+            Learn CPU architecture concepts and understand how
+            instructions move through a processor.
+        </p>
+        <a class="theory-navigation" href="index.html">
+            ⚡ Go to CPU Simulator
+        </a>
+    </section>
+
+    <!-- STEP 1 -->
+    <section class="panel">
+        <h2>1. What is a CPU Pipeline?</h2>
+
+        <p>
+            A CPU pipeline is a technique used by processors to execute
+            multiple instructions efficiently by dividing instruction
+            execution into smaller stages.
+        </p>
+
+        <p>
+            Instead of completing one instruction before starting another,
+            the processor overlaps different stages of multiple instructions.
+            This improves overall instruction throughput.
+        </p>
+
+        <h3>Five Stages of a CPU Pipeline</h3>
+
+        <div class="theory-diagram">
+            <svg viewBox="0 0 800 210" role="img"
+                 aria-label="Five stages of a CPU instruction pipeline"
+                 xmlns="http://www.w3.org/2000/svg">
+
+                <text x="400" y="28" text-anchor="middle"
+                      font-size="21" font-weight="bold" fill="currentColor">
+                    Five Stages of CPU Pipeline
+                </text>
+
+                <g font-size="20" font-weight="bold" text-anchor="middle">
+                    <rect x="15" y="65" width="130" height="75" rx="12" fill="#2563eb"/>
+                    <text x="80" y="110" fill="white">IF</text>
+
+                    <rect x="175" y="65" width="130" height="75" rx="12" fill="#7c3aed"/>
+                    <text x="240" y="110" fill="white">ID</text>
+
+                    <rect x="335" y="65" width="130" height="75" rx="12" fill="#0891b2"/>
+                    <text x="400" y="110" fill="white">EX</text>
+
+                    <rect x="495" y="65" width="130" height="75" rx="12" fill="#d97706"/>
+                    <text x="560" y="110" fill="white">MEM</text>
+
+                    <rect x="655" y="65" width="130" height="75" rx="12" fill="#16a34a"/>
+                    <text x="720" y="110" fill="white">WB</text>
+                </g>
+
+                <g stroke="currentColor" stroke-width="3"
+                   fill="none" stroke-linecap="round">
+                    <path d="M147 102 L170 102 M163 95 L170 102 L163 109"/>
+                    <path d="M307 102 L330 102 M323 95 L330 102 L323 109"/>
+                    <path d="M467 102 L490 102 M483 95 L490 102 L483 109"/>
+                    <path d="M627 102 L650 102 M643 95 L650 102 L643 109"/>
+                </g>
+
+                <g font-size="13" text-anchor="middle" fill="currentColor">
+                    <text x="80" y="163">Fetch</text>
+                    <text x="240" y="163">Decode</text>
+                    <text x="400" y="163">Execute</text>
+                    <text x="560" y="163">Memory</text>
+                    <text x="720" y="163">Write Back</text>
+                </g>
+
+                <text x="400" y="195" text-anchor="middle"
+                      font-size="13" fill="currentColor">
+                    Instruction execution flows from IF to WB
+                </text>
+            </svg>
+        </div>
+
+        <div class="example-box example-blue">
+            <strong>Simple example:</strong>
+            While one instruction is being executed, another can be decoded
+            and a third can be fetched.
+        </div>
+    </section>
+
+    <!-- STEP 2 -->
+    <section class="panel">
+        <h2>2. The Five Pipeline Stages</h2>
+
+        <h3>IF – Instruction Fetch</h3>
+        <p>The processor fetches the next instruction from instruction memory.</p>
+
+        <h3>ID – Instruction Decode</h3>
+        <p>The processor decodes the instruction and reads the required registers.</p>
+
+        <h3>EX – Execute</h3>
+        <p>
+            The ALU performs arithmetic or logical operations, calculates
+            memory addresses, or evaluates branches.
+        </p>
+
+        <h3>MEM – Memory Access</h3>
+        <p>
+            The processor reads data from or writes data to data memory
+            when required.
+        </p>
+
+        <h3>WB – Write Back</h3>
+        <p>The final result is written into the destination register.</p>
+
+        <h3>📊 Pipeline Timing Diagram</h3>
+
+        <p>
+            Observe how different instructions occupy different
+            pipeline stages during each clock cycle.
+        </p>
+
+        <div class="theory-diagram">
+            <table class="theory-table">
+                <tr>
+                    <th>Instruction</th>
+                    <th>1</th><th>2</th><th>3</th>
+                    <th>4</th><th>5</th><th>6</th><th>7</th>
+                </tr>
+                <tr>
+                    <td><strong>ADD</strong></td>
+                    <td class="stage-if">IF</td>
+                    <td class="stage-id">ID</td>
+                    <td class="stage-ex">EX</td>
+                    <td class="stage-mem">MEM</td>
+                    <td class="stage-wb">WB</td>
+                    <td></td><td></td>
+                </tr>
+                <tr>
+                    <td><strong>SUB</strong></td>
+                    <td></td>
+                    <td class="stage-if">IF</td>
+                    <td class="stage-id">ID</td>
+                    <td class="stage-ex">EX</td>
+                    <td class="stage-mem">MEM</td>
+                    <td class="stage-wb">WB</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><strong>AND</strong></td>
+                    <td></td><td></td>
+                    <td class="stage-if">IF</td>
+                    <td class="stage-id">ID</td>
+                    <td class="stage-ex">EX</td>
+                    <td class="stage-mem">MEM</td>
+                    <td class="stage-wb">WB</td>
+                </tr>
+            </table>
+        </div>
+
+        <p>
+            <strong>Remember:</strong> Each instruction advances one stage
+            per clock cycle in this ideal pipeline example.
+        </p>
+
+        <p><strong>Pipeline order:</strong> IF → ID → EX → MEM → WB</p>
+    </section>
+
+    <!-- STEP 3 -->
+    <section class="panel">
+        <h2>3. Pipeline Hazards</h2>
+
+        <p>
+            A pipeline hazard is a condition that prevents an instruction
+            from executing in its expected clock cycle.
+        </p>
+
+        <h3>1. Data Hazard</h3>
+        <p>
+            Occurs when an instruction depends on the result of an earlier
+            instruction that has not yet completed.
+        </p>
+
+        <div class="example-box example-red">
+            <strong>Instruction 1:</strong> ADD R1, R2, R3<br><br>
+            <strong>Instruction 2:</strong> SUB R4, R1, R5
+            <hr>
+            <strong>Problem:</strong> SUB needs the result of ADD.<br>
+            <strong>Solution:</strong> Forwarding or a pipeline stall.
+        </div>
+
+        <h3>2. Control Hazard</h3>
+        <p>
+            Occurs when a branch or jump instruction changes the normal
+            sequence of instruction execution.
+        </p>
+
+        <div class="example-box example-yellow">
+            <strong>Instruction 1:</strong> BEQ R1, R2, 2<br><br>
+            <strong>Normal next instruction:</strong> ADD R3, R4, R5<br>
+            <strong>Branch target:</strong> Instruction 4
+            <hr>
+            <strong>Problem:</strong> The processor may fetch an instruction
+            that must be skipped.<br>
+            <strong>Solution:</strong> Branch handling and pipeline flushing
+            when required.
+        </div>
+
+        <h3>3. Structural Hazard</h3>
+        <p>
+            Occurs when multiple instructions need the same hardware
+            resource at the same time.
+        </p>
+
+        <div class="example-box example-blue">
+            <strong>Instruction 1:</strong> LW R1, 0(R2)<br><br>
+            <strong>Instruction 2:</strong> Another instruction needs the
+            same memory resource.
+            <hr>
+            <strong>Problem:</strong> Both instructions need one shared
+            resource simultaneously.<br>
+            <strong>Solution:</strong> Separate resources, scheduling or stalls.
+        </div>
+
+        <p>
+            <strong>Key idea:</strong> Hazards can interrupt the ideal flow
+            of a CPU pipeline.
+        </p>
+    </section>
+
+    <!-- STEP 4 -->
+    <section class="panel">
+        <h2>4. Data Forwarding</h2>
+
+        <p>
+            Data forwarding is a technique that sends a result directly
+            from a later pipeline stage to an instruction that needs it,
+            without waiting for the result to be written back to the
+            register file.
+        </p>
+
+        <h3>Example</h3>
+
+        <pre>
+ADD R1, R2, R3
+SUB R4, R1, R5
+        </pre>
+
+        <p>
+            The SUB instruction needs R1, which is calculated by ADD.
+            Forwarding can provide the result directly to SUB.
+        </p>
+
+        <h3>⚡ How Data Forwarding Works</h3>
+
+        <div class="example-box example-blue">
+            <strong>Instruction 1:</strong> ADD R1, R2, R3<br><br>
+            <strong>Instruction 2:</strong> SUB R4, R1, R5
+        </div>
+
+        <p>
+            ADD calculates the result for R1. SUB needs that result.
+            Forwarding sends the result directly to SUB without waiting
+            for the register write-back stage.
+        </p>
+
+        <div class="theory-diagram">
+            <svg viewBox="0 0 700 310"
+                 xmlns="http://www.w3.org/2000/svg"
+                 role="img" aria-label="Data forwarding diagram">
+
+                <rect x="30" y="35" width="220" height="75" rx="12" fill="#2563eb"/>
+                <text x="140" y="65" text-anchor="middle"
+                      fill="white" font-size="17" font-weight="bold">
+                    ADD Instruction
+                </text>
+                <text x="140" y="90" text-anchor="middle"
+                      fill="white" font-size="15">
+                    Produces R1
+                </text>
+
+                <rect x="450" y="195" width="220" height="75" rx="12" fill="#16a34a"/>
+                <text x="560" y="225" text-anchor="middle"
+                      fill="white" font-size="17" font-weight="bold">
+                    SUB Instruction
+                </text>
+                <text x="560" y="250" text-anchor="middle"
+                      fill="white" font-size="15">
+                    Needs R1
+                </text>
+
+                <path d="M250 75 L350 75 L350 230 L445 230"
+                      fill="none" stroke="#d97706" stroke-width="5"
+                      stroke-linejoin="round"/>
+
+                <path d="M435 220 L445 230 L435 240"
+                      fill="none" stroke="#d97706" stroke-width="5"/>
+
+                <rect x="270" y="125" width="160" height="42"
+                      rx="8" fill="#d97706"/>
+                <text x="350" y="152" text-anchor="middle"
+                      fill="white" font-size="16" font-weight="bold">
+                    FORWARD R1
+                </text>
+
+                <text x="350" y="295" text-anchor="middle"
+                      fill="currentColor" font-size="14">
+                    Result travels directly to the dependent instruction
+                </text>
+            </svg>
+        </div>
+
+        <div class="example-box example-green">
+            <strong>Result:</strong> Data forwarding reduces unnecessary
+            waiting when the required result is available from a later
+            pipeline stage.
+        </div>
+    </section>
+
+    <!-- STEP 5 -->
+    <section class="panel">
+        <h2>5. Pipeline Stalls and Bubbles</h2>
+
+        <p>
+            A pipeline stall temporarily delays an instruction when the
+            required data or resource is not ready.
+        </p>
+
+        <p>
+            A bubble is an empty pipeline slot introduced to prevent an
+            incorrect instruction execution.
+        </p>
+
+        <p>
+            Stalls can increase the total number of clock cycles required
+            to complete a program.
+        </p>
+
+        <h3>⏸️ Understanding a Pipeline Stall</h3>
+
+        <p>
+            Example: A load instruction is followed by an instruction
+            that immediately needs its loaded data.
+        </p>
+
+        <div class="theory-diagram">
+            <table class="theory-table">
+                <tr>
+                    <th>Instruction</th>
+                    <th>Cycle 1</th><th>Cycle 2</th>
+                    <th>Cycle 3</th><th>Cycle 4</th>
+                    <th>Cycle 5</th><th>Cycle 6</th>
+                </tr>
+                <tr>
+                    <td><strong>LW</strong></td>
+                    <td class="stage-if">IF</td>
+                    <td class="stage-id">ID</td>
+                    <td class="stage-ex">EX</td>
+                    <td class="stage-mem">MEM</td>
+                    <td class="stage-wb">WB</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><strong>ADD</strong></td>
+                    <td></td>
+                    <td class="stage-if">IF</td>
+                    <td class="stage-id">ID</td>
+                    <td style="background:#f59e0b;color:#111827;">STALL</td>
+                    <td class="stage-ex">EX</td>
+                    <td class="stage-mem">MEM</td>
+                </tr>
+                <tr>
+                    <td><strong>Bubble</strong></td>
+                    <td></td><td></td><td></td>
+                    <td style="background:#fee2e2;color:#991b1b;">EMPTY</td>
+                    <td></td><td></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="example-box example-yellow">
+            <strong>What happened?</strong>
+            <p>
+                ADD needs the data loaded by LW. The processor delays
+                ADD for one cycle to allow the data to become available.
+            </p>
+            <strong>Important:</strong> This is an illustrative load-use
+            stall. Actual pipeline timing depends on the processor's
+            forwarding design.
+        </div>
+    </section>
+
+    <!-- STEP 6 -->
+    <section class="panel">
+        <h2>6. Clock Cycles and CPI</h2>
+
+        <p>
+            A clock cycle is one basic timing unit of processor operation.
+            Pipeline stages advance according to the processor clock.
+        </p>
+
+        <p>
+            CPI means Cycles Per Instruction. It measures the average
+            number of clock cycles required per completed instruction.
+        </p>
+
+        <h3>Formula</h3>
+
+        <pre>
+CPI = Total Clock Cycles / Completed Instructions
+        </pre>
+
+        <h3>Example</h3>
+
+        <pre>
+Total Clock Cycles = 10
+Completed Instructions = 2
+
+CPI = 10 / 2 = 5.00
+        </pre>
+
+        <h3>🧮 Interactive CPI Calculator</h3>
+
+        <div class="cpi-calculator">
+
+            <label for="clockInput">
+                <strong>Total Clock Cycles</strong>
+            </label>
+
+            <input type="number" id="clockInput"
+                   value="10" min="1" step="1">
+
+            <label for="instructionInput">
+                <strong>Completed Instructions</strong>
+            </label>
+
+            <input type="number" id="instructionInput"
+                   value="2" min="1" step="1">
+
+            <button type="button" id="calculateCPI">
+                Calculate CPI
+            </button>
+
+            <div id="cpiResult" class="cpi-result" aria-live="polite">
+                <strong>Your CPI: 5.00</strong>
+            </div>
+        </div>
+    </section>
+
+    <!-- STEP 7 -->
+    <section class="panel">
+        <h2>7. Register File and Data Memory</h2>
+
+        <h3>📦 Register File</h3>
+
+        <p>
+            Registers are small, fast storage locations inside the CPU.
+            They temporarily hold operands and results during instruction
+            execution.
+        </p>
+
+        <div class="theory-diagram">
+            <svg viewBox="0 0 700 270"
+                 xmlns="http://www.w3.org/2000/svg"
+                 role="img" aria-label="CPU register file diagram">
+
+                <rect x="180" y="10" width="340" height="45"
+                      rx="10" fill="#2563eb"/>
+                <text x="350" y="39" fill="white"
+                      text-anchor="middle" font-size="20"
+                      font-weight="bold">
+                    CPU Register File
+                </text>
+
+                <g fill="#dbeafe" stroke="#2563eb" stroke-width="2">
+                    <rect x="70" y="85" width="125" height="42" rx="7"/>
+                    <rect x="215" y="85" width="125" height="42" rx="7"/>
+                    <rect x="360" y="85" width="125" height="42" rx="7"/>
+                    <rect x="505" y="85" width="125" height="42" rx="7"/>
+                </g>
+
+                <g fill="#1e3a8a" font-size="17"
+                   font-weight="bold" text-anchor="middle">
+                    <text x="132" y="112">R0</text>
+                    <text x="277" y="112">R1</text>
+                    <text x="422" y="112">R2</text>
+                    <text x="567" y="112">R3</text>
+                </g>
+
+                <path d="M350 55 V72 M132 72 H567
+                         M132 72 V85 M277 72 V85
+                         M422 72 V85 M567 72 V85"
+                      fill="none" stroke="currentColor" stroke-width="2"/>
+
+                <rect x="180" y="160" width="340" height="55"
+                      rx="10" fill="#16a34a"/>
+
+                <text x="350" y="183" fill="white"
+                      text-anchor="middle" font-size="16"
+                      font-weight="bold">
+                    ALU
+                </text>
+
+                <text x="350" y="202" fill="white"
+                      text-anchor="middle" font-size="13">
+                    Uses register values for calculations
+                </text>
+
+                <path d="M132 127 V140 H350 V155
+                         M277 127 V140"
+                      fill="none" stroke="#16a34a" stroke-width="3"/>
+
+                <text x="350" y="250" fill="currentColor"
+                      text-anchor="middle" font-size="15">
+                    Registers provide data to processor operations
+                </text>
+            </svg>
+        </div>
+
+        <h3>💾 Data Memory</h3>
+
+        <p>
+            Data memory stores information that instructions can read or
+            write. For example, LW loads data and SW stores data.
+        </p>
+
+        <div class="theory-diagram">
+            <svg viewBox="0 0 700 250"
+                 xmlns="http://www.w3.org/2000/svg"
+                 role="img" aria-label="Data memory load and store diagram">
+
+                <rect x="30" y="65" width="175" height="105"
+                      rx="12" fill="#2563eb"/>
+
+                <text x="117" y="105" text-anchor="middle"
+                      fill="white" font-size="19" font-weight="bold">
+                    CPU
+                </text>
+
+                <text x="117" y="133" text-anchor="middle"
+                      fill="white" font-size="14">
+                    Executes LW / SW
+                </text>
+
+                <rect x="495" y="45" width="175" height="145"
+                      rx="12" fill="#7c3aed"/>
+
+                <text x="582" y="75" text-anchor="middle"
+                      fill="white" font-size="19" font-weight="bold">
+                    Data Memory
+                </text>
+
+                <g fill="white" font-size="14" text-anchor="middle">
+                    <text x="582" y="105">Address 10: 20</text>
+                    <text x="582" y="130">Address 11: 25</text>
+                    <text x="582" y="155">Address 12: 30</text>
+                </g>
+
+                <path d="M205 90 H485 L475 82 M485 90 L475 98"
+                      fill="none" stroke="#16a34a" stroke-width="4"/>
+
+                <text x="350" y="78" text-anchor="middle"
+                      fill="currentColor" font-size="15" font-weight="bold">
+                    SW: Store
+                </text>
+
+                <path d="M495 155 H215 L225 147 M215 155 L225 163"
+                      fill="none" stroke="#d97706" stroke-width="4"/>
+
+                <text x="350" y="185" text-anchor="middle"
+                      fill="currentColor" font-size="15" font-weight="bold">
+                    LW: Load
+                </text>
+
+                <text x="350" y="230" text-anchor="middle"
+                      fill="currentColor" font-size="14">
+                    CPU and memory exchange data
+                </text>
+            </svg>
+        </div>
+
+        <div class="example-box example-green">
+            <strong>Remember:</strong>
+            Registers are inside the CPU, while data memory stores
+            program data outside the register file.
+        </div>
+    </section>
+
+    <!-- STEP 8 -->
+    <section class="panel">
+        <h2>8. Complete Instruction Walkthrough</h2>
+
+        <p>
+            Let's understand what happens when a CPU executes this instruction:
+        </p>
+
+        <pre>ADD R1, R2, R3</pre>
+
+        <p>
+            This means: Add the values stored in R2 and R3,
+            then store the result in R1.
+        </p>
+
+        <div class="theory-diagram">
+            <svg viewBox="0 0 700 390"
+                 xmlns="http://www.w3.org/2000/svg"
+                 role="img"
+                 aria-label="Complete journey of an ADD instruction through five CPU pipeline stages">
+
+                <g font-size="17" font-weight="bold" text-anchor="middle">
+                    <rect x="185" y="10" width="330" height="55"
+                          rx="12" fill="#2563eb"/>
+                    <text x="350" y="44" fill="white">
+                        1. IF — Fetch ADD instruction
+                    </text>
+
+                    <rect x="185" y="85" width="330" height="55"
+                          rx="12" fill="#7c3aed"/>
+                    <text x="350" y="119" fill="white">
+                        2. ID — Decode and read R2, R3
+                    </text>
+
+                    <rect x="185" y="160" width="330" height="55"
+                          rx="12" fill="#0891b2"/>
+                    <text x="350" y="194" fill="white">
+                        3. EX — Add R2 + R3
+                    </text>
+
+                    <rect x="185" y="235" width="330" height="55"
+                          rx="12" fill="#d97706"/>
+                    <text x="350" y="269" fill="white">
+                        4. MEM — No data access needed
+                    </text>
+
+                    <rect x="185" y="310" width="330" height="55"
+                          rx="12" fill="#16a34a"/>
+                    <text x="350" y="344" fill="white">
+                        5. WB — Write result into R1
+                    </text>
+                </g>
+
+                <g stroke="currentColor" stroke-width="3" fill="none">
+                    <path d="M350 65 V80 M342 73 L350 80 L358 73"/>
+                    <path d="M350 140 V155 M342 148 L350 155 L358 148"/>
+                    <path d="M350 215 V230 M342 223 L350 230 L358 223"/>
+                    <path d="M350 290 V305 M342 298 L350 305 L358 298"/>
+                </g>
+            </svg>
+        </div>
+
+        <h3>Worked Example</h3>
+
+        <div class="example-box example-blue">
+            <p>Assume:</p>
+            <p>R2 = 10</p>
+            <p>R3 = 5</p>
+            <hr>
+            <p>ALU calculates: 10 + 5 = 15</p>
+            <strong>Final result: R1 = 15</strong>
+        </div>
+
+        <p>
+            The instruction has now completed all five pipeline stages.
+            Its result is stored in the destination register.
+        </p>
+    </section>
+
+    <!-- STEP 9 -->
+    <section class="panel">
+        <h2>9. What You Have Learned</h2>
+
+        <ul>
+            <li>CPU pipeline architecture</li>
+            <li>Five pipeline execution stages</li>
+            <li>Data, control, and structural hazards</li>
+            <li>Data forwarding</li>
+            <li>Pipeline stalls and bubbles</li>
+            <li>Clock cycles and CPI calculation</li>
+            <li>Register file and data memory</li>
+            <li>Complete instruction execution</li>
+        </ul>
+
+        <div class="example-box example-green">
+            <strong>Congratulations!</strong>
+            <p>
+                You have completed the RISC-Vision theory lessons.
+                Now apply these concepts practically using the CPU simulator.
+            </p>
+        </div>
+
+        <a href="index.html">⚡ Start CPU Simulation</a>
+    </section>
+
+</main>
+
+<footer>
+    Built with ❤️ for Computer Architecture & VLSI Learning
+</footer>
+
+<!-- CPI Calculator -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const cycles = document.getElementById("clockInput");
+    const instructions = document.getElementById("instructionInput");
+    const button = document.getElementById("calculateCPI");
+    const result = document.getElementById("cpiResult");
+
+    if (cycles && instructions && button && result) {
+
+        button.addEventListener("click", function () {
+
+            const c = Number(cycles.value);
+            const i = Number(instructions.value);
+
+            if (
+                !Number.isInteger(c) ||
+                !Number.isInteger(i) ||
+                c < 1 ||
+                i < 1
+            ) {
+                result.textContent =
+                    "Please enter positive whole numbers for both values.";
+                return;
+            }
+
+            const cpi = c / i;
+
+            result.innerHTML =
+                "<strong>Your CPI: " + cpi.toFixed(2) + "</strong>" +
+                "<p>" + c + " clock cycles ÷ " + i +
+                " instructions = " + cpi.toFixed(2) + "</p>";
+        });
+    }
+});
+</script>
+
+<!-- Flashcard Learning Controller -->
+<script src="theory.js"></script>
+
+</body>
+</html>

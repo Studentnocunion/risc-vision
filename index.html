@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RISC-Vision | Interactive CPU Lab</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>⚡ RISC-Vision</h1>
+        <p>Interactive 32-bit CPU Pipeline Simulator</p>
+    </header>
+
+    <main>
+
+        <!-- Assembly Code Editor -->
+        <section class="panel">
+            <a href="theory.html">📘 Theory & Learning</a>
+            <h2>Assembly Code</h2>
+
+            <textarea id="code" spellcheck="false">ADD R1, R2, R3
+SUB R4, R1, R5
+AND R6, R2, R3
+OR R7, R4, R1</textarea>
+
+            <div class="controls">
+                <button id="runBtn">▶ Run</button>
+                <button id="stepBtn">Step</button>
+                <button id="resetBtn">↻ Reset</button>
+            </div>
+        </section>
+
+        <!-- Instructions for All Users -->
+        <section class="panel">
+            <h2>📘 How to Run Your Program</h2>
+
+            <ol>
+                <li>Paste or edit your Assembly Code.</li>
+                <li>Click ↻ Reset to load the updated program.</li>
+                <li>Click ▶ Run to execute your program.</li>
+            </ol>
+
+            <p>
+                <strong>⚠️ Important:</strong>
+                Always click Reset after changing your Assembly Code
+                before clicking Run or Step.
+            </p>
+        </section>
+
+        <!-- CPU Pipeline -->
+        <section class="panel">
+            <h2>CPU Pipeline</h2>
+
+            <div class="pipeline">
+                <div class="stage" id="IF">IF</div>
+                <div class="stage" id="ID">ID</div>
+                <div class="stage" id="EX">EX</div>
+                <div class="stage" id="MEM">MEM</div>
+                <div class="stage" id="WB">WB</div>
+            </div>
+
+            <p id="cycle">Cycle: 0</p>
+
+            <!-- Performance Statistics -->
+            <div class="stats">
+
+                <div class="stat-card">
+                    <span>Clock Cycles</span>
+                    <strong id="totalCycles">0</strong>
+                </div>
+
+                <div class="stat-card">
+                    <span>Instructions</span>
+                    <strong id="instructionCount">0</strong>
+                </div>
+
+                <div class="stat-card">
+                    <span>Pipeline Stalls</span>
+                    <strong id="stallCount">0</strong>
+                </div>
+
+                <div class="stat-card">
+                    <span>CPU CPI</span>
+                    <strong id="cpi">0.00</strong>
+                </div>
+
+            </div>
+
+            <p id="status">Ready to execute.</p>
+
+            <!-- Hazard Detection and Forwarding -->
+            <div class="monitor">
+                <h3>⚡ Hazard Detection & Forwarding</h3>
+                <p id="hazardStatus">No hazards detected.</p>
+                <p id="forwardStatus">No forwarding yet.</p>
+                <div id="eventLog"></div>
+            </div>
+
+        </section>
+
+        <!-- Register File -->
+        <section class="panel">
+            <h2>Register File</h2>
+            <div id="registers" class="registers"></div>
+        </section>
+
+        <!-- Data Memory -->
+        <section class="panel">
+            <h2>💾 Data Memory</h2>
+            <div id="memory" class="registers"></div>
+        </section>
+
+    </main>
+
+    <footer>
+        Built with ❤️ for Computer Architecture & VLSI Learning
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
