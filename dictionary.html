@@ -1,0 +1,292 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RISC-Vision | Assembly Dictionary</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .dictionary-container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .dictionary-intro {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .dictionary-tools {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .dictionary-tools input,
+        .dictionary-tools select {
+            flex: 1;
+            min-width: 220px;
+            padding: 13px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+      .instruction-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+    align-items: start;
+}
+
+.instruction-card {
+    align-self: start;
+}
+
+        .instruction-card {
+            background: white;
+            color: #1e293b;
+            border: 1px solid #dbe3ee;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        .instruction-card h3 {
+            color: #2563eb;
+            margin-top: 0;
+            font-size: 22px;
+        }
+
+        .instruction-card code {
+            display: block;
+            background: #eef2ff;
+            color: #1e40af;
+            padding: 10px;
+            border-radius: 6px;
+            margin: 10px 0;
+            overflow-wrap: anywhere;
+        }
+
+        .instruction-category {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1d4ed8;
+            padding: 4px 9px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        #noResults {
+            text-align: center;
+            display: none;
+            padding: 25px;
+        }
+
+        .dictionary-note {
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 15px;
+            margin-top: 25px;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="top-menu">
+    <div class="menu-logo">⚡ RISC-Vision</div>
+    <div class="menu-links">
+        <a href="index.html">Home</a>
+        <a href="index.html">Simulator</a>
+        <a href="theory.html">Theory & Learning</a>
+        <a href="dictionary.html">📚 Assembly Dictionary</a>
+    </div>
+</nav>
+
+<header>
+    <h1>📚 Assembly Dictionary</h1>
+    <p>Learn the assembly instructions supported by RISC-Vision</p>
+</header>
+
+<main class="dictionary-container">
+
+    <section class="dictionary-intro">
+        <h2>Explore Assembly Instructions</h2>
+        <p>Search an instruction to understand its meaning, syntax and example.</p>
+    </section>
+
+    <div class="dictionary-tools">
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search instruction, meaning or keyword..."
+        >
+
+        <select id="categoryFilter">
+            <option value="all">All Categories</option>
+            <option value="Arithmetic">Arithmetic</option>
+            <option value="Logical">Logical</option>
+            <option value="Memory">Memory</option>
+            <option value="Branch">Branch</option>
+        </select>
+    </div>
+<center></center>
+    <div class="instruction-grid" id="instructionGrid">
+
+        <article class="instruction-card" data-category="Arithmetic">
+            <span class="instruction-category">Arithmetic</span>
+            <h3>ADD</h3>
+            <p><strong>Meaning:</strong> Addition of two registers.</p>
+            <p><strong>Syntax:</strong></p>
+            <code>ADD R1, R2, R3</code>
+            <p><strong>Working:</strong> Adds the values of R2 and R3 and stores the result in R1.</p>
+            <p><strong>Example:</strong> If R2 = 10 and R3 = 5, then R1 = 15.</p>
+        </article>
+
+        <article class="instruction-card" data-category="Arithmetic">
+            <span class="instruction-category">Arithmetic</span>
+            <h3>SUB</h3>
+            <p><strong>Meaning:</strong> Subtraction of two registers.</p>
+            <p><strong>Syntax:</strong></p>
+            <code>SUB R1, R2, R3</code>
+            <p><strong>Working:</strong> Subtracts R3 from R2 and stores the result in R1.</p>
+            <p><strong>Example:</strong> If R2 = 10 and R3 = 5, then R1 = 5.</p>
+        </article>
+
+        <article class="instruction-card" data-category="Arithmetic">
+            <span class="instruction-category">Arithmetic</span>
+            <h3>ADDI</h3>
+            <p><strong>Meaning:</strong> Add an immediate number.</p>
+            <p><strong>Syntax:</strong></p>
+            <code>ADDI R1, R2, 5</code>
+            <p><strong>Working:</strong> Adds the number 5 to the value in R2 and stores the result in R1.</p>
+            <p><strong>Example:</strong> If R2 = 10, then R1 = 15.</p>
+        </article>
+
+        <article class="instruction-card" data-category="Logical">
+            <span class="instruction-category">Logical</span>
+            <h3>AND</h3>
+            <p><strong>Meaning:</strong> Bitwise AND operation.</p>
+            <p><strong>Syntax:</strong></p>
+            <code>AND R1, R2, R3</code>
+            <p><strong>Working:</strong> Performs AND on each corresponding bit of R2 and R3.</p>
+            <p><strong>Example:</strong> 1100 AND 1010 = 1000.</p>
+        </article>
+
+        <article class="instruction-card" data-category="Logical">
+            <span class="instruction-category">Logical</span>
+            <h3>OR</h3>
+            <p><strong>Meaning:</strong> Bitwise OR operation.</p>
+            <p><strong>Syntax:</strong></p>
+            <code>OR R1, R2, R3</code>
+            <p><strong>Working:</strong> Performs OR on each corresponding bit of R2 and R3.</p>
+            <p><strong>Example:</strong> 1100 OR 1010 = 1110.</p>
+        </article>
+
+        <article class="instruction-card" data-category="Logical">
+            <span class="instruction-category">Logical</span>
+            <h3>XOR</h3>
+            <p><strong>Meaning:</strong> Bitwise exclusive OR.</p>
+            <p><strong>Syntax:</strong></p>
+            <code>XOR R1, R2, R3</code>
+            <p><strong>Working:</strong> Produces 1 when corresponding bits are different.</p>
+            <p><strong>Example:</strong> 1100 XOR 1010 = 0110.</p>
+        </article>
+
+        <article class="instruction-card" data-category="Memory">
+            <span class="instruction-category">Memory</span>
+            <h3>LW</h3>
+            <p><strong>Meaning:</strong> Load Word from memory.</p>
+            <p><strong>Syntax:</strong></p>
+            <code>LW R1, 0(R2)</code>
+            <p><strong>Working:</strong> Reads memory at the address R2 + 0 and stores the value in R1.</p>
+            <p><strong>Example:</strong> If R2 = 10, it loads M[10] into R1.</p>
+        </article>
+
+        <article class="instruction-card" data-category="Memory">
+            <span class="instruction-category">Memory</span>
+            <h3>SW</h3>
+            <p><strong>Meaning:</strong> Store Word in memory.</p>
+            <p><strong>Syntax:</strong></p>
+            <code>SW R1, 0(R2)</code>
+            <p><strong>Working:</strong> Stores the value of R1 at memory address R2 + 0.</p>
+            <p><strong>Example:</strong> If R2 = 10, the value of R1 is stored in M[10].</p>
+        </article>
+
+        <article class="instruction-card" data-category="Branch">
+            <span class="instruction-category">Branch</span>
+            <h3>BEQ</h3>
+            <p><strong>Meaning:</strong> Branch if Equal.</p>
+            <p><strong>Syntax:</strong></p>
+            <code>BEQ R1, R2, 2</code>
+            <p><strong>Working:</strong> If R1 and R2 are equal, execution jumps by the given offset.</p>
+            <p><strong>Example:</strong> If both registers are equal, the next instruction is skipped and execution jumps according to the offset.</p>
+        </article>
+
+        <article class="instruction-card" data-category="Branch">
+            <span class="instruction-category">Branch</span>
+            <h3>BNE</h3>
+            <p><strong>Meaning:</strong> Branch if Not Equal.</p>
+            <p><strong>Syntax:</strong></p>
+            <code>BNE R1, R2, 2</code>
+            <p><strong>Working:</strong> If R1 and R2 are different, execution jumps by the given offset.</p>
+            <p><strong>Example:</strong> If the registers are different, the next instruction is skipped and execution jumps according to the offset.</p>
+        </article>
+
+    </div>
+
+    <p id="noResults">No matching instructions found.</p>
+</center>
+</main>
+
+<footer>
+    &copy; <a href="https://smartlnks.com/JgFr">
+        <font color="white">Student noc union</font>
+    </a>
+    Built with ❤️ for Computer Architecture & VLSI Learning
+</footer>
+
+<script>
+    const searchInput = document.getElementById("searchInput");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const instructionCards = document.querySelectorAll(".instruction-card");
+    const noResults = document.getElementById("noResults");
+
+    function filterInstructions() {
+        const searchText = searchInput.value.toLowerCase().trim();
+        const selectedCategory = categoryFilter.value;
+        let visibleCount = 0;
+
+        instructionCards.forEach(card => {
+            const cardText = card.textContent.toLowerCase();
+            const cardCategory = card.dataset.category;
+
+            const matchesSearch = cardText.includes(searchText);
+            const matchesCategory =
+                selectedCategory === "all" ||
+                cardCategory === selectedCategory;
+
+            if (matchesSearch && matchesCategory) {
+                card.style.display = "block";
+                visibleCount++;
+            } else {
+                card.style.display = "none";
+            }
+        });
+
+        noResults.style.display = visibleCount === 0 ? "block" : "none";
+    }
+
+    searchInput.addEventListener("input", filterInstructions);
+    categoryFilter.addEventListener("change", filterInstructions);
+</script>
+
+</body>
+</html>
