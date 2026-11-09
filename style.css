@@ -374,3 +374,61 @@ footer {
 #EX::after { content: "Execute"; }
 #MEM::after { content: "Memory Access"; }
 #WB::after { content: "Write Back"; }
+/* RISC-Vision Top Navigation Menu */
+
+.top-menu {
+    width: 100%;
+    min-height: 65px;
+    background: #101827;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 30px;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    gap: 15px;
+    border-bottom: 2px solid #2563eb;
+}
+
+.menu-logo {
+    font-size: 23px;
+    font-weight: bold;
+    color: #60a5fa;
+    letter-spacing: 0.5px;
+}
+
+.menu-links {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.menu-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.menu-links a:hover {
+    color: #60a5fa;
+    transform: translateY(-2px);
+}
+
+/* Mobile Responsive Menu */
+
+@media (max-width: 600px) {
+    .top-menu {
+        flex-direction: column;
+        justify-content: center;
+        padding: 15px;
+    }
+
+    .menu-links {
+        justify-content: center;
+        gap: 16px;
+    }
+}
